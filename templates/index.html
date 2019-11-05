@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% block play %}
+<div align="center">
+<h3>{{file_type}}</h3>
+{% for i in range(music_files_number) %}
+    <p><a href="/{{ music_files[i] }}"> {{ i+1 }}. {{ music_files[i] }} </a></p>
+{% endfor %}
+</div>
+{% endblock %}
+
