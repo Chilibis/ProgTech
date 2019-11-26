@@ -1,0 +1,24 @@
+<!doctype html>
+<title>MusicBox</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+	<div class=metanav>
+    {% if g.user %}
+      <span>{{ g.user[1] }}</span>
+      <a href="{{ url_for('logout') }}">Log Out</a>
+    {% else %}
+      <a href="{{ url_for('register') }}">Register</a>
+      <a href="{{ url_for('login') }}">Log In</a>
+    {% endif %}
+	</div>
+ <h2><a href="/">MusicBox</a></h2> 
+ <hr>
+  {% block body %}{% endblock %}
+<!--  <hr>
+ {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+  {% endfor %}
+-->
+ <!-- <iframe src="{{ url_for('static', filename='play.html') }}"> -->
+</div>
+	

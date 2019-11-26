@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block body %}
+
+	<form action="{{ url_for('find') }}" method=post>
+		<button formaction="{{ url_for('Cl_filter') }}">x</button>
+	  {% for st in styles %}
+		<button formaction="{{url_for('style2', n=st.id)}}">{{ st.name }}</button>
+	  {% endfor %}
+	  <br><div class="form-find">
+	  {% if session.user_id %}
+		<button formaction="{{ url_for('sel_fav') }}">v</button>
+      {% endif %}
+		<input type=search name=tr_name placeholder="track name" value="{{request.form['tr_name']}}"> 
+		<input type=submit value="Найти">
+	  </div>
+	</form> 
+ <hr>
+  <ul class=entries>
+  {% for track in tracks %}
+    <li>
+		{% if session.user_id %}
+	<a href="{{ url_for('fav', n=track.id) }}"> <button>{% if  track.m_favor %}v{% else %}o{%endif%}</button></a>
+		{% endif %}
+	<a href="{{ url_for('play_track', n=track.id) }}">{{track.artist}} - {{ track.m_name[:40]}}</a>
+	<small><small> - {{ track.ms_name }}</small></small>
+<!--	<a href="{{ url_for('style', n=track.m_style) }}"><button>{{ track.ms_name }}</button></a> -->
+	{% else %}
+    <li><em>Увы, ничего такого нет...</em>
+  {% endfor %}
+  </ul>
+  <hr>
+	{% if id%}
+  	<audio controls style="width: -webkit-fill-available;">
+		<source src={{m_file[5]}}>
+	</audio>
+	<div class="info">
+		<small>Name:</small><i>{{ m_file[0]}}</i> 
+	{% if m_file[2]%}
+		<small>Artist:</small><i>{{ m_file[2]}}</i>
+	{% endif %}
+	{% if m_file[3]%}
+		<small>Album:</small><i>{{ m_file[3]}}</i>
+	{% endif %}
+	{% if m_file[4]%}
+		<small>About:</small><i>{{ m_file[4]}}</i>
+	{% endif %}
+	</div><br>
+	<a href="{{url_for('download', n=id)}}" ><button>Скачать</button></a>
+	{% endif %}
+	{% if session.user_id == 1 and id%}
+			<a class="action" href="{{ url_for('edit', n=id) }}"><button>Редактировать</button></a>
+	{% endif %}
+	{% if session.user_id == 1 %}
+			<a class="action" href="{{ url_for('add') }}"><button>Добавить</button></a>
+	{% endif %}
+{% endblock %}
