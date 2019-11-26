@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h4>Добавим...</h4>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form  class="add" method=POST enctype=multipart/form-data action=" {{  url_for('add') }}" >
+	<p><input type=file name="file">
+	<dl>
+	  <dt>Название:
+	  <dd><input type=text name="name">
+	  <dt>Исполнитель:
+	  <dd><input type=text name="artist">
+	  <dt>Альбом:
+	  <dd><input type=text name="album">
+	  <dt>Жанр:
+	  <dd><select name="style">
+<!--			<option selected disabled>Выберите жанр</option> -->
+				{% for st in styles %}
+			<option value={{st.id}}>{{ st.name }}</option>
+				{% endfor %}
+ 		 </select> 
+      <dt>Описание:
+      <dd><textarea  name=about></textarea>
+	  <dt><input type="submit" value="Сохранить"></p>
+    </dl>
+  </form>
+{% endblock %}
